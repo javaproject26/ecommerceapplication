@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+	<link rel="stylesheet" th:href="@{/css/container.css}">
+
+	<title>Login</title>
+
+</head>
+
+<nav class="navbar">
+		<div class="navbar-left">
+			<a href="#" class="navbar-brand">Ecommerce App</a>
+			<ul class="nav-links">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<li><a href="/" class="active">Home</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<li><a href="/users">user</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<li><a href="/productsdetails">Products</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<li><a href="/orders">Orders</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<li><a href="/admin/register">Add Admin</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<li><a href="/all/admin">admins</a></li>
+			</ul>
+		</div>
+	</nav>
+
+<table border="1">
+	<thead>
+		<tr>
+			<th>Username</th>
+			<th>Email</th>
+			<th>Password</th>
+			<th>update</th>
+			<th>delete</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="user : ${users}">
+						<form th:action="@{/update/user}" method="post">
+						    <input type="hidden"name="id" th:value="${user.id}"/>
+						    <td><input type="text" name="name" th:value="${user.name}" /></td>
+						    <td><input type="email" name="email" th:value="${user.email}" /></td>
+						    <td><input type="text" name="password" th:value="${user.password}" /></td>
+						    <td><button type="submit">Update</button></td>
+						</form>
+					    <!-- Delete Form -->
+					    <form th:action="@{'/delete/user/'+ ${user.id}}" method="post">
+							<input type="hidden" name="_method" value="delete"/>
+					        <td><button type="submit">Delete</button></td>
+					    </form>
+					</tr>
+	</tbody>
+</table>
+</body>
+</html>
+
+
+

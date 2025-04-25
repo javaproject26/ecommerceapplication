@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/cart.css}">
+    <title>Cart</title>
+</head>
+<body>
+	<nav class="navbar">
+		        <div class="navbar-left">
+		            <a href="#" class="navbar-brand">Ecommerce App</a>
+		            <ul class="nav-links">
+		                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<li><a href="/" class="active">Home</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		                <li><a href="/aboutuspage">About Us</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		                <li><a href="/products">Products</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		                <li><a href="/contactus">Contact Us</a></li>
+		                <form action="/product/search" method="post">
+		                    <input type="text" name="name" placeholder="Search">
+		                    <button style="all: unset" type="submit">
+		                        <img src="/img/download (4).png" width="23px" height="23px">
+		                    </button>
+		                </form>
+						<form action="/user/cart">
+							<button style="all: unset; margin-left: 480px;" type="submit">
+							    <img src="/img/cart.png" width="30px" height="30px">
+							</button></form>
+		            </ul>
+		        </div>
+		        <a href="/login" class="login-btn">Logout</a>
+		    </nav><br>
+    <h2>Order Summary</h2>
+
+    <div th:if="${#lists.isEmpty(orders)}">
+        <p>No orders found in your cart.</p>
+    </div>
+	<div class="cart-container">
+    <div th:each="order : ${orders}">
+        <p class="order-detail">Product Name: <span th:text="${order.product.name}"></span></p>
+        <p class="order-detail">Price per unit: ₹<span th:text="${order.product.price}"></span></p>
+        <p class="order-detail">Quantity: <span th:text="${order.quantity}"></span></p>
+        <p class="order-detail">Total Amount: ₹<span th:text="${order.amount}"></span></p>
+		<p class="order-detail">Address: <span th:text="${order.address}"></span></p>
+		<div th:if="${productImages[order.id] != null}" class="image-wrapper">
+		        <img th:src="'data:image/jpeg;base64,' + ${productImages[order.id]}" alt="Product Image" width="200"/>
+		    </div>
+        <hr>
+    </div>
+	</div>
+</body>
+</html>
