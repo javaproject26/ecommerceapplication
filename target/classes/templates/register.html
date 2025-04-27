@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<link rel="stylesheet" th:href="@{/css/container.css}">
+	<title>Register</title>
+</head>
+<nav class="navbar">
+
+		<div class="navbar-left">
+
+			<a href="#" class="navbar-brand">Ecommerce App</a>
+
+			<ul class="nav-links">
+
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<li><a href="/" class="active">Home</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+				<li><a href="/aboutuspage">About Us</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+				<li><a href="/productus">Products</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+				<li><a href="/contactus">Contact Us</a></li>
+
+			</ul>
+
+		</div>
+
+		<a href="/login" class="login-btn">Login</a>
+
+	</nav>
+<div class="container">
+	<div class="form-box">
+	<h1>RegisterPage</h1>
+	<form action="/add/user" method="post">
+	  <div class="form-group">
+		<label for="Enter a name">Name</label>
+		<input type="text" class ="form-control"id="name" name="name" placeholder="Enter Name"><br>
+			  </div><br>
+		<div class="form-group"	> 
+	    <label for="Enter Email">Email address</label>
+	    <input type="email" class="form-control" id="email" name="email" placeholder="Enter email"><br>
+	  </div><br>
+	  <div class="form-group">
+	    <label for="Enter Password">Password</label>
+	    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+	  </div><br>
+	  <div class="form-group form-check">
+	    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+	    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+	  </div><br>
+	  <button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+	<br>
+	<p>Already have an account</p>
+	<a th:href="@{/login}">Login</a>
+	</div>
+	</div>
+</body>
+</html>

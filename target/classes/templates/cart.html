@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Cart</title>
+    <link rel="stylesheet" th:href="@{/css/cart.css}">
+</head>
+<body>
+	<nav class="navbar">
+	        <div class="navbar-left">
+	            <a href="#" class="navbar-brand">Ecommerce App</a>
+	            <ul class="nav-links">
+	                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<li><a href="/" class="active">Home</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                <li><a href="/aboutuspage">About Us</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                <li><a href="/products">Products</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                <li><a href="/contactus">Contact Us</a></li>
+	                <form action="/product/search" method="post">
+	                    <input type="text" name="name" placeholder="Search">
+	                    <button style="all: unset" type="submit">
+	                        <img src="/img/download (4).png" width="23px" height="23px">
+	                    </button>
+	                </form>
+					<form action="/user/cart">
+						<button style="all: unset; margin-left: 480px;" type="submit">
+						    <img src="/img/cart.png" width="30px" height="30px">
+						</button></form>
+	            </ul>
+	        </div>
+	        <a href="/login" class="login-btn">Logout</a>
+	    </nav>
+    <div class="cart-container">
+        <form action="/place/order" method="post">
+            <input type="hidden" name="productId" th:value="${order.product.id}">
+            <input type="hidden" name="quantity" th:value="${order.quantity}">
+            <input type="hidden" name="userId" th:if="${user != null}" th:value="${user.id}" />
+
+            <h2>🛒 Order Summary</h2>
+
+            <p class="order-detail">Product Name: <span th:text="${order.product.name}"></span></p>
+            <p class="order-detail">Price per unit: ₹<span th:text="${order.product.price}"></span></p>
+            <p class="order-detail">Quantity: <span th:text="${order.quantity}"></span></p>
+            <p class="order-detail">Total Amount: ₹<span th:text="${order.amount}"></span></p>
+
+            <div th:if="${base64Image != ''}">
+                <img class="product-image" th:src="'data:image/png;base64,' + ${base64Image}" alt="Product Image" width="200"/>
+            </div>
+
+            <textarea name="address" placeholder="Enter delivery address..."></textarea>
+
+            <button type="submit">Place Order</button>
+        </form>
+    </div>
+</body>
+</html>

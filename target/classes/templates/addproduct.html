@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+	<link rel="stylesheet" th:href="@{/css/container.css}">
+
+	<title>Login</title>
+
+</head>
+
+<nav class="navbar">
+		<div class="navbar-left">
+			<a href="#" class="navbar-brand">Ecommerce App</a>
+			<ul class="nav-links">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<li><a href="/" class="active">Home</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<li><a href="/users">user</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<li><a href="/productsdetails">Products</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<li><a href="/orders">Orders</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<li><a href="/admin/register">Add Admin</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<li><a href="/all/admin">admins</a></li>
+			</ul>
+		</div>
+	</nav>
+
+<div class="container">
+
+	<div class="form-box">
+
+	<form action="/add/product" method="post" enctype="multipart/form-data">
+
+		<div class="form-group">
+
+		        <label for="name">name</label>
+
+		        <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" required><br>
+
+		    </div><br>
+
+		    <div class="form-group">
+
+		        <label for="price">price</label>
+
+		        <input type="text" class="form-control" id="price" name="price" placeholder="price" required>
+
+		    </div><br>
+			<div class="form-group">
+
+				        <label for="description">description</label>
+
+				        <input type="text" class="form-control" id="description" name="description" placeholder="description" required>
+
+				    </div><br>
+	<div class="form-group">
+
+					 <label for="image">image</label>
+
+					<input type="file" class="form-control" id="image" name="image" placeholder="image" required>
+					</div><br>
+					<div class="form-group">
+										 <label for="available">available</label>
+										<input type="number" class="form-control" id="available" name="available" placeholder="available" required>
+										</div><br>
+	  <button type="submit" class="btn btn-primary">Submit</button>
+
+	</form>
+</div>
+	
+	</div>
+
+</body>
+
+</html>
+
+
+

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Home</title>
+    <link rel="stylesheet" th:href="@{/css/css.css}">
+</head>
+<body>
+    <script>
+        function increaseNumber(productId) {
+            console.log("Increase clicked for productId: " + productId);
+            var quantitySpan = document.getElementById("quantity-" + productId);
+            var quantityInput = document.getElementById("quantityInput-" + productId);
+            if (quantitySpan && quantityInput) {
+                var quantity = parseInt(quantitySpan.textContent) || 0;
+                if (quantity < 10) {
+                    quantity++;
+                    quantitySpan.textContent = quantity;
+                    quantityInput.value = quantity;
+                }
+            } else {
+                console.error("Element not found for product ID:", productId);
+            }
+        }
+        function decreaseNumber(productId) {
+            console.log("Decrease clicked for productId: " + productId);
+            var quantitySpan = document.getElementById("quantity-" + productId);
+            var quantityInput = document.getElementById("quantityInput-" + productId);
+            if (quantitySpan && quantityInput) {
+                var quantity = parseInt(quantitySpan.textContent) || 0;
+                if (quantity > 0){
+                    quantity--;
+                    quantitySpan.textContent = quantity;
+                    quantityInput.value = quantity;
+                }
+            } else {
+                console.error("Element not found for product ID:", productId);
+            }
+        }
+		function validateQuantity(productId) {
+		        var quantityInput = document.getElementById("quantityInput-" + productId);
+		        var quantity = parseInt(quantityInput.value) || 0;
+		        if (quantity === 0) {
+		            alert("Please select at least 1 item before placing an order.");
+		            return false; 
+		        }
+		        return true; 
+		    }
+    </script>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <a href="#" class="navbar-brand">Ecommerce App</a>
+            <ul class="nav-links">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<li><a href="/" class="active">Home</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <li><a href="/aboutuspage">About Us</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <li><a href="/products">Products</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <li><a href="/contactus">Contact Us</a></li>
+                <form action="/product/search" method="post">
+                    <input type="text" name="name" placeholder="Search">
+                    <button style="all: unset" type="submit">
+                        <img src="/img/download (4).png" width="23px" height="23px">
+                    </button>
+                </form>
+				<form action="/user/cart">
+				<button style="all: unset; margin-left: 470px;" type="submit">
+				<img src="/img/cart.png" width="30px" height="30px">
+				</button></form>
+            </ul>
+        </div>
+        <a href="/login" class="login-btn">Logout</a>
+    </nav>
+
+    <div class="product-container">
+        <div th:each="product : ${products}" class="product-card">
+			<form action="/place/order" method="get" th:onsubmit="|return validateQuantity('${product.id}')|">
+                <!-- Hidden fields for product info -->
+                <input type="hidden" name="productId" th:value="${product.id}" />
+                <input type="hidden" name="price" th:value="${product.price}" />
+                <input type="hidden" th:attr="id='quantityInput-' + ${product.id}" name="quantity" value="0" />
+                <img th:src="@{/product/image/{id}(id=${product.id})}" alt="Product Image" class="product-image"/>
+                <div class="product-info">
+                    <span th:text="${product.name}" class="product-name"></span>
+                    <span th:text="'Price: ₹' + ${product.price}" class="product-price"></span>
+                    <span th:text="${product.description}" class="product-description"></span><br>
+                    <button type="button" style="all: unset" th:onclick="|increaseNumber('${product.id}')|">
+                        <img src="/img/download_2.jpeg" alt="Increase" width="15px">
+                    </button>
+                    <span th:attr="id='quantity-' + ${product.id}">0</span>
+                    <button type="button" style="all: unset" th:onclick="|decreaseNumber('${product.id}')|">
+                        <img src="/img/download_3.png" alt="Decrease" width="15px">
+                    </button><br>
+                    <button type="submit">Add to Cart</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

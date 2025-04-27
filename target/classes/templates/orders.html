@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<link rel="stylesheet" th:href="@{/css/container.css}">
+	<title>orders</title>
+</head>
+<nav class="navbar">
+		<div class="navbar-left">
+			<a href="#" class="navbar-brand">Ecommerce App</a>
+			<ul class="nav-links">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<li><a href="/" class="active">Home</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<li><a href="/users">user</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<li><a href="/productsdetails">Products</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<li><a href="/orders">Orders</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<li><a href="/admin/register">Add Admin</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<li><a href="/all/admin">admins</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<table border="2px">
+		        <thead>
+		            <tr>
+		                <th>Id</th>
+		                <th>Amount</th>
+		                <th>Date</th>
+						<th>Quantity</th>
+						<th>User_Id</th>
+					    <th>Product_Id</th>
+						<th>Address</th>
+		            </tr>
+		        </thead>
+				<tbody>
+					<tr th:each="orders : ${orderList}">
+					    <td th:text="${orders.id}"></td>
+					    <td th:text="${orders.amount}"></td>
+					    <td th:text="${#dates.format(orders.date, 'yyyy-MM-dd')}"></td>
+					    <td th:text="${orders.quantity}"></td>
+					    <td th:text="${orders.user.id}"></td>
+					    <td th:text="${orders.product.id}"></td>
+					    <td th:text="${orders.address}"></td>
+					</tr>
+				</tbody>
+		    </table>
+</body>
+</html>
+
+
+
