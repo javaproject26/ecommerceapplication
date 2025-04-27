@@ -19,7 +19,7 @@ public class HomeController {
 	@GetMapping({"/", "/home"})
 	public String home(HttpServletResponse response) throws IOException {
 //		response.sendRedirect("http://localhost:3000/login");
-		return "home";
+		return "Index";
 	}
 	@GetMapping("/products")
 	public String productspage(Model model) {
