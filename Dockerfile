@@ -8,7 +8,8 @@ ENV SERVER_PORT=8080
 WORKDIR /app
 
 # Copy the jar file
-COPY target/demo-0.0.1.jar app.jar
+COPY target/demo-0.0.1-SNAPSHOT.jar app.jar
+
 
 # Expose port 8080
 EXPOSE 8080
