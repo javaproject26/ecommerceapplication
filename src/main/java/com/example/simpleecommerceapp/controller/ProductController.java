@@ -29,24 +29,33 @@ public class ProductController {
 	private OrderService orderservice;
 	
 	@PostMapping("/add/product")
-    public String addProduct(@RequestParam("name") String name,
-                             @RequestParam("price") double price,
-                             @RequestParam("description") String description,
-                             @RequestParam("image") MultipartFile file,
-                             @RequestParam("available")int available) {
-        try {
-            Product product = new Product();
-            product.setName(name);
-            product.setPrice(price);
-            product.setDescription(description);
+public String addProduct(@RequestParam("name") String name,
+                         @RequestParam("price") double price,
+                         @RequestParam("description") String description,
+                         @RequestParam("image") MultipartFile file,
+                         @RequestParam("available") int available) {
+    try {
+        Product product = new Product();
+        product.setName(name);
+        product.setPrice(price);
+        product.setDescription(description);
+        product.setAvailable(available);
+
+        if (!file.isEmpty()) {
             product.setImage(file.getBytes());
-            product.setAvailable(available);
-            productservice.CreateProduct(product); 
-        } catch (IOException e) {
-            e.printStackTrace();
+        } else {
+            product.setImage(null); // or handle no image case differently
         }
-        return "addproduct"; // Redirect to product list page
+
+        productservice.CreateProduct(product); 
+    } catch (IOException e) {
+        e.printStackTrace();
+        return "error"; // Optional: show error page if image upload fails
     }
+
+    return "addproduct"; // Better UX: redirect to product list after adding
+}
+
 	@GetMapping("/productsdetails")
 	public String productspage(Model model) {
 		List<Product> productlist=productservice.GetAllProduct();

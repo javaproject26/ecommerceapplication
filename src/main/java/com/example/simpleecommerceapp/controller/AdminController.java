@@ -1,6 +1,7 @@
 package com.example.simpleecommerceapp.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -67,6 +68,7 @@ public class AdminController {
 		model.addAttribute("orderList", orderService.GetAllOrder());
 		return "orders";
 	}
+
 	
 	@PostMapping("/add/admin")
 	public String createAdmin(Admin admin) {
@@ -124,19 +126,20 @@ public class AdminController {
 		return "userhome";
 	}
 	@PostMapping("/user/login")
-	public String userLogin(@ModelAttribute User user, RedirectAttributes redirectAttributes,HttpSession session,HttpServletResponse response) throws IOException {
-		System.out.println(user.getEmail());
-		if (userService.verifycredentials(user.getEmail(), user.getPassword())) {
-			user = userService.findUserByEmail(user.getEmail());
-			System.out.println("User ID: " + user.getId());
-			session.setAttribute("userId", user.getId());
-			return "redirect:/userhome";
-		}
-		redirectAttributes.addAttribute("error", "Invalid email or password");
-//		response.sendRedirect("http://localhost:3000/login");
-		return "login";
-		
+	public String userLogin(@ModelAttribute User user, HttpSession session, Model model) {
+	    System.out.println(user.getEmail());
+
+	    if (userService.verifycredentials(user.getEmail(), user.getPassword())) {
+	        user = userService.findUserByEmail(user.getEmail());
+	        System.out.println("User ID: " + user.getId());
+	        session.setAttribute("userId", user.getId());
+	        return "redirect:/userhome";
+	    }
+
+	    model.addAttribute("error", "Invalid email or password");
+	    return "login";
 	}
+
 	@GetMapping("/user/login")
 	public String Login() {
 		return"userhome";
@@ -160,23 +163,42 @@ public class AdminController {
 	}
 	
 	@PostMapping("/place/order")
-	public String placeOrder(@RequestParam Long productId,Long userId, @RequestParam int quantity, Model model,HttpSession session,@RequestParam String address) {
-		System.out.println(productId);
+	public String processOrder(
+	        @RequestParam Long productId,
+	        @RequestParam int quantity,
+	        @RequestParam String paymentMethod,
+	        @RequestParam String address,
+	        HttpSession session,
+	        RedirectAttributes redirectAttributes,
+	        Model model) {
+
+	    Long userId = (Long) session.getAttribute("userId");
+	    if (userId == null) {
+	        return "redirect:/login";
+	    }
 	    Product product = productrepo.findById(productId)
 	            .orElseThrow(() -> new RuntimeException("Product not found"));
-	     userId = (Long) session.getAttribute("userId");
+	    User user = userService.getUser(userId);
+
 	    Order order = new Order();
 	    order.setProduct(product);
+	    order.setUser(user);
 	    order.setQuantity(quantity);
 	    order.setPrice(product.getPrice());
 	    order.setAmount(product.getPrice() * quantity);
-	    System.out.println(order.getAmount());
 	    order.setDate(new Date());
-	    User user = userService.getUser(userId);
-		order.setUser(user);
-		order.setAddress(address);
-		orderService.CreateOrder(order);
-		return "redirect:/userhome";
+	    order.setAddress(address);
+
+	    session.setAttribute("pendingOrder", order);
+
+	    if (paymentMethod.equals("ONLINE")) {
+	        return "redirect:/payment";
+	    } else {
+	        orderService.CreateOrder(order);
+	        session.removeAttribute("pendingOrder");
+	        redirectAttributes.addFlashAttribute("successMessage", "✅ Order placed successfully with Cash on Delivery!");
+	        return "redirect:/user/cart";
+	    }
 	}
 	@GetMapping("/all/admin")
 	public String alladmin(Model model){
@@ -184,5 +206,4 @@ public class AdminController {
 		model.addAttribute("admins", admin);
 		return "admins";
 	}
-
 }

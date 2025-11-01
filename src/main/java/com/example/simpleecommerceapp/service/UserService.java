@@ -27,6 +27,10 @@ public class UserService {
 	public void CreateUser(User user) {
 		userrepo.save(user);
 	}
+	public boolean emailExists(String email) {
+	    return userrepo.findByEmailIgnoreCase(email) != null;
+	}
+
 	public User findUserByEmail(String Email) {
 		return userrepo.findByEmailIgnoreCase(Email);
 	}

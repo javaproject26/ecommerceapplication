@@ -41,7 +41,6 @@ public class AdminService {
 		if (admin.getPassword().equals(password)) {
 			return true;
 		}
-		
 		return false;
 	}
 

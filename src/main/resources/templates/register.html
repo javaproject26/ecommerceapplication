@@ -14,9 +14,7 @@
 
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<li><a href="/" class="active">Home</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-				<li><a href="/aboutuspage">About Us</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-				<li><a href="/productus">Products</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<li><a href="/aboutus">About Us</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 				<li><a href="/contactus">Contact Us</a></li>
 
@@ -29,6 +27,9 @@
 	</nav>
 <div class="container">
 	<div class="form-box">
+		<div th:if="${error}" style="color: red; font-weight: bold;">
+		            <p th:text="${error}"></p>
+		        </div>
 	<h1>RegisterPage</h1>
 	<form action="/add/user" method="post">
 	  <div class="form-group">
@@ -36,7 +37,7 @@
 		<input type="text" class ="form-control"id="name" name="name" placeholder="Enter Name"><br>
 			  </div><br>
 		<div class="form-group"	> 
-	    <label for="Enter Email">Email address</label>
+	    <label for="Enter Email">Email</label>
 	    <input type="email" class="form-control" id="email" name="email" placeholder="Enter email"><br>
 	  </div><br>
 	  <div class="form-group">

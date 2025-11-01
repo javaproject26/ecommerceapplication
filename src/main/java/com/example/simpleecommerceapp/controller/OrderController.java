@@ -11,7 +11,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -40,6 +42,36 @@ public class OrderController {
 	
 	@Autowired
 	private ProductRepo productrepo;
+	
+	@GetMapping("/payment")
+	public String paymentPage(HttpSession session, Model model) {
+	    Order order = (Order) session.getAttribute("pendingOrder");
+	    if (order == null) {
+	        return "redirect:/user/cart";
+	    }
+	    model.addAttribute("order", order);
+	    return "payment";
+	}
+
+	@PostMapping("/confirm/payment")
+	public String confirmPayment(@RequestParam String status, HttpSession session, Model model) {
+	    Order order = (Order) session.getAttribute("pendingOrder");
+	    if (order == null) {
+	        return "redirect:/user/cart";
+	    }
+
+	    if ("success".equalsIgnoreCase(status)) {
+	        orderservice.CreateOrder(order);
+	        session.removeAttribute("pendingOrder");
+	        model.addAttribute("message", "✅ Payment Successful! Order placed successfully.");
+	        return "order-success";
+	    } else {
+	        session.removeAttribute("pendingOrder");
+	        model.addAttribute("message", "❌ Payment Failed! Please try again.");
+	        return "payment-failure";
+	    }
+	}
+
 	
 	@GetMapping("/place/order")
 	public String placeOrder(@RequestParam Long productId,Long userId, @RequestParam int quantity, Model model,HttpSession session) {
@@ -80,4 +112,18 @@ public class OrderController {
 		model.addAttribute("productImages", productImages);
 		return "usercart";
 	}
+	@DeleteMapping("/delete/order/{id}")
+	public String deleteorder(@PathVariable Long id) {
+		orderservice.deleteOrder(id);
+		return "redirect:/orders";
+		
+	}
+	@PostMapping("/update/order/{id}")
+	public String updateorder(Order order) {
+		orderservice.updateOrder(order, order.getId());
+		System.out.println("updateorder");
+		return "redirect:/orders";
+	}
+
+
 }

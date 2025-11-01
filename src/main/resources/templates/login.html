@@ -3,13 +3,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
 	<link rel="stylesheet" th:href="@{/css/container.css}">
-
 	<title>Login</title>
-
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-
+<body>
 <nav class="navbar">
 	
 		<div class="navbar-left">
@@ -22,9 +20,8 @@
 
 				<li><a href="/aboutus">About Us</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-				<li><a href="/products">Products</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-				<li><a href="/contactUs">Contact Us</a></li>
+				<li><a href="/contactus">Contact Us</a></li>
 
 			</ul>
 
@@ -34,6 +31,9 @@
 
 <div class="container">
 	<div class="form-box">
+		<div th:if="${error}" style="color: red;">
+		    <p th:text="${error}"></p>
+		</div>
 
 	<h1>Login</h1>
 
@@ -41,7 +41,7 @@
 
 		<div class="form-group">
 
-		        <label for="email">Email address</label>
+		        <label for="email">Email</label>
 
 		        <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required><br>
 
@@ -75,8 +75,4 @@
 	</div>
 
 </body>
-
 </html>
-
-
-

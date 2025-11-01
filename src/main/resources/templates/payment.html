@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Payment</title>
+</head>
+<body>
+    <h2>💳 Choose Online Payment Method</h2>
+    <p>Amount to Pay: ₹<span th:text="${order.amount}"></span></p>
+
+    <form action="/confirm/payment" method="post">
+        <button type="submit" name="status" value="success">Pay Now (Simulated)</button>
+        <button type="submit" name="status" value="fail">Cancel Payment</button>
+    </form>
+</body>
+</html>

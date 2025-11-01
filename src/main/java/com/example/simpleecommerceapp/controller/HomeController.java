@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.simpleecommerceapp.service.ProductService;
 
@@ -26,7 +27,7 @@ public class HomeController {
 		model.addAttribute("productlist", productservice.GetAllProduct());
 		return "products";
 		}
-	@GetMapping("/contactUs")
+	@GetMapping("/contactus")
 	public String contactpage() {
 		return "contactus";
 		}

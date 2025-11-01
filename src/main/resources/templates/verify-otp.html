@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Verify OTP</title>
+	<link rel="stylesheet" th:href="@{/css/container.css}">
+</head>
+<body>
+	<nav class="navbar">
+
+			<div class="navbar-left">
+
+				<a href="#" class="navbar-brand">Ecommerce App</a>
+
+				<ul class="nav-links">
+
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<li><a href="/" class="active">Home</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+					<li><a href="/aboutus">About Us</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+					<li><a href="/contactus">Contact Us</a></li>
+
+				</ul>
+
+			</div>
+
+			<a href="/login" class="login-btn">Login</a>
+
+		</nav>
+	<div class="container">
+		<div class="form-box">
+	<h2>Enter OTP sent to your email</h2>
+	<form action="/verify-otp" method="post">
+		<div class="form-group">
+		<input type="hidden" name="email" class ="form-control" th:value="${email}" />
+		</div>
+		<div class="form-group">
+		<input type="text" name="otp" class ="form-control" placeholder="Enter OTP" required />
+		<button type="submit" class="btn btn-primary">Verify</button>
+		</div>
+	</form>
+		</div>
+	</div>
+</body>
+</html>

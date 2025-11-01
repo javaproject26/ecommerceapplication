@@ -3,15 +3,34 @@
 <head>
     <link rel="stylesheet" th:href="@{/css/cart.css}">
     <title>Cart</title>
+	<style>
+	.floating-msg {
+	    position: fixed;
+	    top: 20px;
+	    right: 20px;
+	    background-color: #4CAF50;
+	    color: white;
+	    padding: 12px 20px;
+	    border-radius: 5px;
+	    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+	    z-index: 1000;
+	    animation: fadeOut 4s forwards;
+	}
+
+	@keyframes fadeOut {
+	    0% { opacity: 1; }
+	    80% { opacity: 1; }
+	    100% { opacity: 0; display: none; }
+	}
+	</style>
 </head>
 <body>
 	<nav class="navbar">
 		        <div class="navbar-left">
 		            <a href="#" class="navbar-brand">Ecommerce App</a>
 		            <ul class="nav-links">
-		                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<li><a href="/" class="active">Home</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		                <li><a href="/aboutuspage">About Us</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		                <li><a href="/products">Products</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<li><a href="/userhome" class="active">Home</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		                <li><a href="/aboutus">About Us</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		                <li><a href="/contactus">Contact Us</a></li>
 		                <form action="/product/search" method="post">
 		                    <input type="text" name="name" placeholder="Search">
@@ -28,6 +47,8 @@
 		        <a href="/login" class="login-btn">Logout</a>
 		    </nav><br>
     <h2>Order Summary</h2>
+	
+	<div th:if="${successMessage}" class="floating-msg" th:text="${successMessage}"></div>
 
     <div th:if="${#lists.isEmpty(orders)}">
         <p>No orders found in your cart.</p>
